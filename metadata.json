@@ -1,0 +1,10 @@
+{
+  "name": "FitCheck.ai",
+  "description": "Your personal AI stylist that uses computer vision to analyze skin tone and outfit colors, providing personalized fashion recommendations based on data, not guesswork.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "FitCheck",
+    "slug": "fitcheck-ai",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": { "resizeMode": "contain", "backgroundColor": "#F5F0E8" },
+    "ios": { "supportsTablet": false, "bundleIdentifier": "ai.fitcheck.app" },
+    "android": { "adaptiveIcon": { "backgroundColor": "#F5F0E8" }, "package": "ai.fitcheck.app" },
+    "plugins": [
+      ["expo-camera", { "cameraPermission": "FitCheck needs camera access for skin tone detection and clothing photos." }],
+      ["expo-image-picker", { "photosPermission": "FitCheck needs photo library access to upload clothing items." }]
+    ]
+  }
+}

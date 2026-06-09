@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+  body {
+    background-color: #F5F0E8;
+    color: #1C1C1E;
+    font-family: 'DM Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: 'Playfair Display', serif; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-charcoal text-cream px-6 py-3 font-medium tracking-wide
+           hover:bg-mink transition-colors duration-200 cursor-pointer;
+  }
+  .btn-outline {
+    @apply border border-charcoal text-charcoal px-6 py-3 font-medium
+           hover:bg-charcoal hover:text-cream transition-colors duration-200 cursor-pointer;
+  }
+  .card { @apply bg-white border border-stone-200 p-6; }
+  .tag {
+    @apply text-xs tracking-widest uppercase px-3 py-1
+           bg-stone-100 text-slate border border-stone-200;
+  }
+}
+
+.color-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  display: inline-block; border: 1px solid rgba(0,0,0,0.1);
+}
+.score-bar-fill {
+  height: 3px; background: #8B7355; transition: width 0.6s ease;
+}
+.dropzone-active {
+  border-color: #8B7355 !important;
+  background-color: rgba(139,115,85,0.05) !important;
+}

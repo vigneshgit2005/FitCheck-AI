@@ -1,0 +1,67 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user fashion preferences and color profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "skinToneHex": { "type": "string" },
+        "colorSeason": { "type": "string" },
+        "preferredStyles": { "type": "array", "items": { "type": "string" } },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "ClothingItem": {
+      "title": "Clothing Item",
+      "description": "An item in the user's digital closet",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "category": { "type": "string", "enum": ["top", "bottom", "outerwear", "shoes", "accessory"] },
+        "primaryColor": { "type": "string" },
+        "secondaryColor": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "category", "primaryColor"]
+    },
+    "FitCheckSession": {
+      "title": "FitCheck Session",
+      "description": "A single analysis of an outfit",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "skinTone": { "type": "string" },
+        "outfitColors": { "type": "array", "items": { "type": "string" } },
+        "verdict": { "type": "string" },
+        "recommendations": { "type": "string" },
+        "score": { "type": "number" },
+        "feedback": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "imageUrl", "verdict"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": "UserProfile",
+      "description": "User profiles"
+    },
+    "/users/{uid}/closet/{itemId}": {
+      "schema": "ClothingItem",
+      "description": "User digital closet items"
+    },
+    "/users/{uid}/sessions/{sessionId}": {
+      "schema": "FitCheckSession",
+      "description": "History of outfit checks"
+    }
+  }
+}

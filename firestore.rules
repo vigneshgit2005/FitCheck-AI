@@ -1,0 +1,61 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helpers
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(uid) { return isSignedIn() && request.auth.uid == uid; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    // Validation Helpers
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['uid', 'email']) 
+        && data.uid == request.auth.uid
+        && data.email is string
+        && (data.skinToneHex == null || data.skinToneHex is string)
+        && (data.colorSeason == null || data.colorSeason is string);
+    }
+
+    function isValidClothingItem(data) {
+      return data.keys().hasAll(['userId', 'category', 'primaryColor'])
+        && data.userId == request.auth.uid
+        && data.category in ['top', 'bottom', 'outerwear', 'shoes', 'accessory']
+        && data.primaryColor is string;
+    }
+
+    function isValidSession(data) {
+      return data.keys().hasAll(['userId', 'imageUrl', 'verdict'])
+        && data.userId == request.auth.uid
+        && data.imageUrl is string
+        && data.verdict is string;
+    }
+
+    // 2. User Profiles
+    match /users/{uid} {
+      allow get: if isOwner(uid);
+      allow create, update: if isOwner(uid) && isValidUserProfile(incoming());
+    }
+
+    // 3. User Closets
+    match /users/{uid}/closet/{itemId} {
+      allow list, get: if isOwner(uid);
+      allow create: if isOwner(uid) && isValidClothingItem(incoming()) && isValidId(itemId);
+      allow update: if isOwner(uid) && isValidClothingItem(incoming()) 
+        && incoming().diff(existing()).affectedKeys().hasOnly(['category', 'primaryColor', 'secondaryColor', 'imageUrl', 'tags']);
+      allow delete: if isOwner(uid);
+    }
+
+    // 4. Analysis Sessions
+    match /users/{uid}/sessions/{sessionId} {
+      allow list, get: if isOwner(uid);
+      allow create: if isOwner(uid) && isValidSession(incoming()) && isValidId(sessionId);
+      allow delete: if isOwner(uid);
+    }
+  }
+}

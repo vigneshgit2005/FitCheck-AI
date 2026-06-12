@@ -5,19 +5,29 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { getFirestore, type FirestoreError } from "firebase/firestore";
 
-// Your web app's Firebase configuration
+// Firebase config is expected to be provided via Vite env vars at build time.
+// Using env vars avoids committing real credentials into git.
+function getRequiredEnv(name: string): string {
+  const v = (import.meta as any)?.env?.[name] as string | undefined;
+  if (!v || typeof v !== "string") {
+    throw new Error(`Missing required env var: ${name}`);
+  }
+  return v;
+}
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBN_6hzDI8lrqFayz1m3Iy8JGtnkHFssZM",
-  authDomain: "fitcheckai-504db.firebaseapp.com",
-  projectId: "fitcheckai-504db",
-  storageBucket: "fitcheckai-504db.firebasestorage.app",
-  messagingSenderId: "380684388655",
-  appId: "1:380684388655:web:86da14e2be8dd6485439da",
-  measurementId: "G-4NKMDCVE74",
+  apiKey: getRequiredEnv("VITE_FIREBASE_API_KEY"),
+  authDomain: getRequiredEnv("VITE_FIREBASE_AUTH_DOMAIN"),
+  projectId: getRequiredEnv("VITE_FIREBASE_PROJECT_ID"),
+  storageBucket: getRequiredEnv("VITE_FIREBASE_STORAGE_BUCKET"),
+  messagingSenderId: getRequiredEnv("VITE_FIREBASE_MESSAGING_SENDER_ID"),
+  appId: getRequiredEnv("VITE_FIREBASE_APP_ID"),
+  measurementId: getRequiredEnv("VITE_FIREBASE_MEASUREMENT_ID"),
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 
 // Analytics (browser-only)
 if (typeof window !== "undefined") {

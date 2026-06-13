@@ -1,4 +1,4 @@
-# FitCheck.ai
+# FitCheck.AI
 
 > Your personal AI style assistant — outfit recommendations from your own wardrobe, matched to your skin tone and occasion.
 
@@ -76,7 +76,6 @@ docker-compose up --build
 ```
 
 App is live at **http://localhost**  
-API docs at **http://localhost:8000/docs**
 
 To stop:
 ```bash
@@ -237,39 +236,6 @@ Copy `.env.example` to `.env` and configure:
 
 ---
 
-## UI Screenshots
-
-Interface screenshots (add files under `docs/screenshots/`):
-
-| Screen | Screenshot |
-|---|---|
-| Onboarding | ![Onboarding](docs/screenshots/onboard.png) |
-| Wardrobe | ![Wardrobe](docs/screenshots/wardrobe.png) |
-| Recommendation | ![Recommendation](docs/screenshots/recommend.png) |
-
----
-
-## Roadmap
-
-
-- [x] Backend — FastAPI + ChromaDB + CV/NLP pipeline
-- [x] Frontend — React Digital Closet UI (3 pages)
-- [x] Docker + docker-compose setup
-- [x] Integration test suite (78 tests)
-- [ ] Mobile app — React Native (iOS + Android)
-- [ ] User authentication
-- [ ] Outfit history + favourites
-- [ ] Style trend suggestions using NLP on fashion data
-- [ ] Body type fit recommendations
-
----
-
-## Contributing
-
-1. Fork the repo
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Run tests before committing: `pytest tests/ -v`
-4. Open a pull request
 
 ---
 
